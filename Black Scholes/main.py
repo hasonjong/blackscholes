@@ -2,7 +2,7 @@ import numpy as np
 from scipy.stats import norm
 import yfinance as yf
 
-# Function to get validated float input     just testing something here
+# Function to get validated float input     just testing something here again
 def get_float(prompt, min_value=None):
     while True:
         try:
