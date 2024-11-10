@@ -8,11 +8,11 @@
 <body>
 <div class="container">
     <h1 class="mt-5">Option Pricing Result</h1>
-    <div class="alert alert-success">
-        The {{ option_type_full }} option price is: <strong>${{ price }}</strong>
-    </div>
     <div class="alert alert-info">
         Current stock price of {{ ticker }}: <strong>${{ stock_price }}</strong>
+    </div>
+    <div class="alert alert-success">
+        The {{ option_type_full }} option price is: <strong>${{ price }}</strong>
     </div>
     <a href="/" class="btn btn-primary">Calculate Another Option</a>
 </div>
