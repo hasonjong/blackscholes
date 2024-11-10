@@ -18,6 +18,7 @@ def blackScholes(r, S, K, T, sigma, type="C"):
     return round(price, 2)
 
 @app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
         try:
@@ -52,13 +53,20 @@ def index():
             # Calculate the option price using Black-Scholes formula
             price = blackScholes(rate, S, strike, T, sigma, type=option_type)
 
-            # Render result page with the calculated price and option type
-            return render_template("result.html", price=price, option_type_full=option_type_full)
+            # Render result page with the calculated price, option type, current stock price, and ticker symbol
+            return render_template(
+                "result.html",
+                price=price,
+                option_type_full=option_type_full,
+                stock_price=round(S, 2),  # Pass the current stock price
+                ticker=ticker.upper()     # Pass the ticker symbol in uppercase
+            )
 
         except Exception as e:
             return render_template("index.html", error=str(e))
 
     return render_template("index.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
