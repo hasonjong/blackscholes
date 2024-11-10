@@ -4,17 +4,100 @@
     <meta charset="UTF-8">
     <title>Option Pricing Result</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        :root {
+            --bg-color: white;
+            --text-color: black;
+            --container-bg: #f8f9fa;
+            --button-bg: #007bff;
+            --button-hover-bg: #0056b3;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            background-color: var(--container-bg);
+            padding: 10px 20px 20px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            margin: 0;
+        }
+        .btn-primary {
+            background-color: var(--button-bg);
+            border-color: var(--button-bg);
+            width: 200px;
+            margin: 20px auto;
+            display: block;
+        }
+        .btn-primary:hover {
+            background-color: var(--button-hover-bg);
+            border-color: var(--button-hover-bg);
+        }
+        h1 {
+            margin-top: 15px;
+            margin-bottom: 20;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-    <h1 class="mt-5">Option Pricing Result</h1>
+    <h1>Option Pricing Result</h1>
     <div class="alert alert-info">
         Current stock price of {{ ticker }}: <strong>${{ stock_price }}</strong>
     </div>
     <div class="alert alert-success">
-        The {{ option_type_full }} option price is: <strong>${{ price }}</strong>
+        The {{ option_type_full|lower }} option price is: <strong>${{ price }}</strong>
     </div>
-    <a href="/" class="btn btn-primary">Calculate Another Option</a>
+    <a href="/" class="btn btn-primary">Calculate Another Option Price</a>
 </div>
+
+<script>
+    // Function to apply the theme based on the value in localStorage
+    function applyTheme(theme) {
+        if (theme === 'dark') {
+            document.documentElement.style.setProperty('--bg-color', 'black');
+            document.documentElement.style.setProperty('--text-color', 'white');
+            document.documentElement.style.setProperty('--container-bg', '#333');
+            document.documentElement.style.setProperty('--button-bg', '#0066cc');
+            document.documentElement.style.setProperty('--button-hover-bg', '#005bb5');
+        } else {
+            document.documentElement.style.setProperty('--bg-color', 'white');
+            document.documentElement.style.setProperty('--text-color', 'black');
+            document.documentElement.style.setProperty('--container-bg', '#f8f9fa');
+            document.documentElement.style.setProperty('--button-bg', '#007bff');
+            document.documentElement.style.setProperty('--button-hover-bg', '#0056b3');
+        }
+    }
+
+    // Check the theme in localStorage and apply it
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    applyTheme(savedTheme);
+
+    const toggleButton = document.createElement('button');
+    toggleButton.textContent = savedTheme === 'dark' ? 'Toggle Light Mode' : 'Toggle Dark Mode';
+    toggleButton.classList.add('btn', 'btn-secondary');
+    toggleButton.style.position = 'absolute';
+    toggleButton.style.top = '20px';
+    toggleButton.style.right = '20px';
+    document.body.appendChild(toggleButton);
+
+    toggleButton.addEventListener('click', () => {
+        const currentTheme = localStorage.getItem('theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('theme', newTheme);
+        applyTheme(newTheme);
+        toggleButton.textContent = newTheme === 'dark' ? 'Toggle Light Mode' : 'Toggle Dark Mode';
+    });
+</script>
 </body>
 </html>

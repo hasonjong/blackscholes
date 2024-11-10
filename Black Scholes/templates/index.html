@@ -4,39 +4,119 @@
     <meta charset="UTF-8">
     <title>Black Scholes Option Pricing Calculator</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        :root {
+            --bg-color: white;
+            --text-color: black;
+            --container-bg: #f8f9fa;
+            --input-bg: white;
+            --button-bg: #007bff;
+            --button-hover-bg: #0056b3;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            background-color: var(--container-bg);
+            padding: 20px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        .form-group label {
+            color: var(--text-color);
+        }
+        .form-control {
+            background-color: var(--input-bg);
+            color: var(--text-color);
+        }
+        .btn-primary {
+            background-color: var(--button-bg);
+            border-color: var(--button-bg);
+            display: block;
+            width: 100%;
+        }
+        .btn-primary:hover {
+            background-color: var(--button-hover-bg);
+            border-color: var(--button-hover-bg);
+        }
+        #toggleTheme {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        h1 {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
+<button id="toggleTheme" class="btn btn-secondary">Toggle Dark Mode</button>
 <div class="container">
-    <h1 class="mt-5">Black Scholes Option Pricing Calculator</h1>
+    <h1>Black Scholes Option Pricing Calculator</h1>
     {% if error %}
         <div class="alert alert-danger">{{ error }}</div>
     {% endif %}
     <form method="post">
         <div class="form-group">
-            <label for="ticker">Stock Ticker Symbol (e.g., AAPL):</label>
+            <label for="ticker">Stock Ticker Symbol:</label>
             <input type="text" class="form-control" id="ticker" name="ticker" required>
         </div>
         <div class="form-group">
-            <label for="strike">Strike Price (K):</label>
+            <label for="strike">Strike Price:</label>
             <input type="number" step="0.01" class="form-control" id="strike" name="strike" required>
         </div>
         <div class="form-group">
-            <label for="time">Time to Expiration (in days):</label>
+            <label for="time">Time to Expiration (days):</label>
             <input type="number" class="form-control" id="time" name="time" required>
         </div>
         <div class="form-group">
-            <label for="rate">Risk-Free Interest Rate (e.g., 0.05 for 5%):</label>
+            <label for="rate">Risk-Free Interest Rate:</label>
             <input type="number" step="0.0001" class="form-control" id="rate" name="rate" required>
         </div>
         <div class="form-group">
             <label for="option_type">Option Type:</label>
             <select class="form-control" id="option_type" name="option_type" required>
-                <option value="C">Call Option</option>
-                <option value="P">Put Option</option>
+                <option value="C">Call</option>
+                <option value="P">Put</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Calculate Option Price</button>
     </form>
 </div>
+
+<script>
+    const toggleButton = document.getElementById('toggleTheme');
+
+    toggleButton.addEventListener('click', () => {
+        if (document.documentElement.style.getPropertyValue('--bg-color') === 'white') {
+            document.documentElement.style.setProperty('--bg-color', 'black');
+            document.documentElement.style.setProperty('--text-color', 'white');
+            document.documentElement.style.setProperty('--container-bg', '#333');
+            document.documentElement.style.setProperty('--input-bg', '#555');
+            document.documentElement.style.setProperty('--button-bg', '#0066cc');
+            document.documentElement.style.setProperty('--button-hover-bg', '#005bb5');
+            toggleButton.innerText = 'Toggle Light Mode';
+        } else {
+            document.documentElement.style.setProperty('--bg-color', 'white');
+            document.documentElement.style.setProperty('--text-color', 'black');
+            document.documentElement.style.setProperty('--container-bg', '#f8f9fa');
+            document.documentElement.style.setProperty('--input-bg', 'white');
+            document.documentElement.style.setProperty('--button-bg', '#007bff');
+            document.documentElement.style.setProperty('--button-hover-bg', '#0056b3');
+            toggleButton.innerText = 'Toggle Dark Mode';
+        }
+    });
+</script>
 </body>
 </html>
